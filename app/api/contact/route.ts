@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
+import { db } from '@/lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 export async function POST(request: Request) {
   try {
@@ -15,21 +15,17 @@ export async function POST(request: Request) {
       );
     }
     
-    // Connect to MongoDB
-    const client = await clientPromise;
-    const db = client.db('portfolio');
-    
     // Prepare the contact document with timestamp
     const contactDocument = {
       ...formData,
-      createdAt: new Date(),
-      _id: new ObjectId()
+      createdAt: serverTimestamp()
     };
     
-    // Insert the contact submission into the collection
-    const result = await db.collection('contacts').insertOne(contactDocument);
+    // Add the contact submission to Firestore
+    const contactsCollection = collection(db, 'contacts');
+    const docRef = await addDoc(contactsCollection, contactDocument);
     
-    console.log('Contact form submission saved to MongoDB:', result);
+    console.log('Contact form submission saved to Firestore:', docRef.id);
 
     // Return success response
     return NextResponse.json({ 

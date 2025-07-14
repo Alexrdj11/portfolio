@@ -3,7 +3,12 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 // Replace with your MongoDB connection string
 // It's best to store this in an environment variable
 // For local development with MongoDB Compass: mongodb://localhost:27017
-const uri = process.env.MONGODB_URI || "mongodb://localhost:27017";
+// For MongoDB Atlas: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority
+if (!process.env.MONGODB_URI) {
+  throw new Error('Please add your MongoDB URI to .env.local');
+}
+
+const uri = process.env.MONGODB_URI;
 
 // Create a MongoClient
 const client = new MongoClient(uri, {
