@@ -16,16 +16,28 @@ export async function POST(request: Request) {
     }
     
     // Prepare the contact document with timestamp
+    // Only include specific fields to avoid invalid values
     const contactDocument = {
-      ...formData,
-      createdAt: serverTimestamp()
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject || '',
+      message: formData.message,
+      createdAt: new Date().toISOString() // Use ISO string instead of serverTimestamp()
     };
     
     // Add the contact submission to Firestore
-    const contactsCollection = collection(db, 'contacts');
-    const docRef = await addDoc(contactsCollection, contactDocument);
+    let docId;
+    try {
+      const contactsCollection = collection(db, 'contacts');
+      console.log('Adding document to Firestore:', JSON.stringify(contactDocument));
+      const docRef = await addDoc(contactsCollection, contactDocument);
+      docId = docRef.id;
+    } catch (firestoreError) {
+      console.error('Firestore error details:', firestoreError);
+      throw firestoreError;
+    }
     
-    console.log('Contact form submission saved to Firestore:', docRef.id);
+    console.log('Contact form submission saved to Firestore:', docId);
 
     // Return success response
     return NextResponse.json({ 

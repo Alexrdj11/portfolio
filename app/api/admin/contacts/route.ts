@@ -1,21 +1,26 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import { db } from '@/lib/firebase';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 // In a real application, you would add authentication here
 // to ensure only admins can access this endpoint
 
 export async function GET() {
   try {
-    // Connect to MongoDB
-    const client = await clientPromise;
-    const db = client.db('portfolio');
+    // Create a reference to the contacts collection
+    const contactsCollection = collection(db, 'contacts');
     
-    // Fetch all contacts, sorted by createdAt in descending order
-    const contacts = await db
-      .collection('contacts')
-      .find({})
-      .sort({ createdAt: -1 })
-      .toArray();
+    // Create a query against the collection
+    const q = query(contactsCollection, orderBy('createdAt', 'desc'));
+    
+    // Get the documents
+    const querySnapshot = await getDocs(q);
+    
+    // Convert the documents to an array of data
+    const contacts = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
     
     return NextResponse.json({ 
       success: true, 
