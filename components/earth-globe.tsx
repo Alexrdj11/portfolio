@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useEffect, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { OrbitControls, Stars } from "@react-three/drei"
 import * as THREE from "three"
@@ -9,10 +9,23 @@ function NetworkGlobe() {
   const pointsRef = useRef<THREE.Points>(null)
   const linesRef = useRef<THREE.LineSegments>(null)
   
-  // Parameters for the network globe
-  const radius = 2.5
-  const nodeCount = 180
-  const connectionDistance = 0.8
+  // Parameters for the network globe - adjust for mobile
+  const [isMobile, setIsMobile] = useState(false)
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+  
+  const radius = isMobile ? 1.8 : 2.5  // Smaller radius on mobile
+  const nodeCount = isMobile ? 120 : 180  // Fewer nodes on mobile for performance
+  const connectionDistance = isMobile ? 0.6 : 0.8  // Shorter connections on mobile
   const rotationSpeed = 0.001
 
   // Create particle texture for glowing effect
@@ -57,8 +70,9 @@ function NetworkGlobe() {
       positions[i * 3 + 1] = radius * Math.sin(theta) * Math.sin(phi)
       positions[i * 3 + 2] = radius * Math.cos(phi)
       
-      // Random size for each node
-      sizes[i] = Math.random() * 0.05 + 0.02
+      // Random size for each node - smaller on mobile
+      const baseSize = isMobile ? 0.015 : 0.02
+      sizes[i] = Math.random() * (isMobile ? 0.03 : 0.05) + baseSize
       
       // White color with slight variations for shining effect
       colors[i * 3] = 0.8 + Math.random() * 0.2      // R
@@ -76,7 +90,7 @@ function NetworkGlobe() {
     geometry.setAttribute('glow', new THREE.BufferAttribute(glowValues, 1))
     
     return { nodes: geometry, nodePositions: positions, glowIntensities: glowValues }
-  }, [nodeCount, radius])
+  }, [nodeCount, radius, isMobile])
   
   // Create connections (lines) between nodes
   const lines = useMemo(() => {
@@ -180,7 +194,7 @@ function NetworkGlobe() {
       <points ref={pointsRef}>
         <primitive object={nodes} attach="geometry" />
         <pointsMaterial
-          size={0.1}
+          size={isMobile ? 0.08 : 0.1}  // Smaller points on mobile
           sizeAttenuation={true}
           transparent
           depthWrite={false}
@@ -205,9 +219,58 @@ function NetworkGlobe() {
 }
 
 export function EarthGlobe() {
+  const [cameraSettings, setCameraSettings] = useState({
+    position: [0, 0, 7] as [number, number, number],
+    fov: 45
+  })
+
+  useEffect(() => {
+    const updateCameraSettings = () => {
+      const isMobile = window.innerWidth < 768
+      const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024
+      
+      if (isMobile) {
+        // Mobile: Move camera further back and increase FOV for full globe view
+        setCameraSettings({
+          position: [0, 0, 10],
+          fov: 60
+        })
+      } else if (isTablet) {
+        // Tablet: Middle ground
+        setCameraSettings({
+          position: [0, 0, 8],
+          fov: 50
+        })
+      } else {
+        // Desktop: Original settings
+        setCameraSettings({
+          position: [0, 0, 7],
+          fov: 45
+        })
+      }
+    }
+
+    updateCameraSettings()
+    window.addEventListener('resize', updateCameraSettings)
+
+    return () => window.removeEventListener('resize', updateCameraSettings)
+  }, [])
+
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
-      <Canvas camera={{ position: [0, 0, 7], fov: 45 }}>
+      <Canvas 
+        camera={{ 
+          position: cameraSettings.position, 
+          fov: cameraSettings.fov,
+          aspect: typeof window !== 'undefined' ? window.innerWidth / window.innerHeight : 1
+        }}
+        dpr={[1, 2]} // Limit pixel ratio for better mobile performance
+        gl={{ 
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance"
+        }}
+      >
         <ambientLight intensity={0.2} />
         <directionalLight position={[10, 10, 10]} intensity={0.8} />
         <NetworkGlobe />
@@ -217,10 +280,20 @@ export function EarthGlobe() {
           rotateSpeed={0.3}
           autoRotate
           autoRotateSpeed={0.5}
+          maxPolarAngle={Math.PI} // Allow full rotation
+          minPolarAngle={0}
         />
         
-        {/* Add stars for a space effect */}
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        {/* Add stars for a space effect - fewer on mobile */}
+        <Stars 
+          radius={100} 
+          depth={50} 
+          count={typeof window !== 'undefined' && window.innerWidth < 768 ? 2000 : 5000} 
+          factor={4} 
+          saturation={0} 
+          fade 
+          speed={1} 
+        />
         
         {/* Background gradient sphere */}
         <mesh scale={[20, 20, 20]}>
