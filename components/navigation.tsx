@@ -4,9 +4,8 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Volume2, VolumeX, Sun, Moon } from "lucide-react"
+import { Menu, X, Sun, Moon, Linkedin, Twitter, Mail } from "lucide-react"
 import { useTheme } from "next-themes"
-import { useSound } from "@/components/sound-provider"
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -22,7 +21,6 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
-  const { soundEnabled, toggleSound, playHover } = useSound()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,7 +54,6 @@ export function Navigation() {
                 <motion.div key={item.name} whileHover={{ scale: 1.05 }}>
                   <Link
                     href={item.href}
-                    onMouseEnter={playHover}
                     className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
                       pathname === item.href ? "text-cyan-400 glow-cyan" : "text-gray-300 hover:text-white hover:glow"
                     }`}
@@ -70,15 +67,42 @@ export function Navigation() {
 
           {/* Controls */}
           <div className="flex items-center space-x-4">
-            <motion.button
+            {/* Social Media Links */}
+            <motion.a
+              href="https://www.linkedin.com/in/harsha-jain-469377253/"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={toggleSound}
               className="p-2 rounded-full glass glass-hover"
+              aria-label="LinkedIn Profile"
             >
-              {soundEnabled ? <Volume2 size={20} /> : <VolumeX size={20} />}
-            </motion.button>
+              <Linkedin size={20} className="text-gray-300 hover:text-blue-400" />
+            </motion.a>
 
+            <motion.a
+              href="https://x.com/Alex64914127"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full glass glass-hover"
+              aria-label="Twitter Profile"
+            >
+              <Twitter size={20} className="text-gray-300 hover:text-cyan-400" />
+            </motion.a>
+
+            <motion.a
+              href="mailto:harshahjain4@gmail.com"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 rounded-full glass glass-hover"
+              aria-label="Send Email"
+            >
+              <Mail size={20} className="text-gray-300 hover:text-green-400" />
+            </motion.a>
+
+            {/* Theme Toggle */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}

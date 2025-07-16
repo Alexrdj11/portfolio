@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { ConstellationBackground } from "@/components/constellation-background"
 import { AmbientParticles } from "@/components/ambient-particles"
-import { SoundProvider } from "@/components/sound-provider"
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -24,7 +23,29 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "HJ_Industries",
   description: "Portfolio of a developer specializing in AI, ML, and software development.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1"
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  icons: {
+    icon: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+        sizes: '32x32',
+      },
+      {
+        url: '/favicon-16x16.svg',
+        type: 'image/svg+xml',
+        sizes: '16x16',
+      },
+    ],
+    shortcut: '/favicon.svg',
+    apple: [
+      {
+        url: '/icon-192x192.svg',
+        sizes: '192x192',
+        type: 'image/svg+xml',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({
@@ -36,14 +57,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${orbitron.variable} ${poppins.variable} font-poppins antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <SoundProvider>
-            <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
-              <ConstellationBackground />
-              <AmbientParticles />
-              <Navigation />
-              <main className="relative z-10">{children}</main>
-            </div>
-          </SoundProvider>
+          <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
+            <ConstellationBackground />
+            <AmbientParticles />
+            <Navigation />
+            <main className="relative z-10">{children}</main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

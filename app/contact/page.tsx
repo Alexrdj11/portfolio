@@ -284,7 +284,7 @@ export default function ContactPage() {
                 </motion.a>
 
                 <motion.a
-                  href="https://x.com/alexrdj11" 
+                  href="https://x.com/Alex64914127" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, rotate: 5 }}

@@ -96,7 +96,8 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 1.2 }}
           className="text-xl md:text-2xl text-gray-300 mb-8 mx-auto text-left max-w-fit"
         >
-          Final year B.E student
+          HELLO FRIEND...<br />
+          let's Engineer something extraordinary
         </motion.p>
 
         <motion.div
