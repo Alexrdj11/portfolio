@@ -50,7 +50,9 @@ export function GallerySection() {
     return () => window.removeEventListener('resize', updateItemsPerView)
   }, [])
 
-  const maxIndex = Math.max(0, Math.ceil(galleryImages.length / itemsPerView) - 1)
+  const maxIndex = itemsPerView === 1 
+    ? galleryImages.length - 1 
+    : Math.max(0, Math.ceil(galleryImages.length / itemsPerView) - 1)
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
@@ -78,7 +80,11 @@ export function GallerySection() {
   // Smooth scroll to current image
   useEffect(() => {
     if (scrollRef.current) {
-      const scrollAmount = currentIndex * (100 / itemsPerView)
+      // For mobile (1 item per view), use simple percentage calculation
+      // For desktop/tablet, use grouped calculation
+      const scrollAmount = itemsPerView === 1 
+        ? currentIndex * 100 
+        : currentIndex * (100 / itemsPerView)
       scrollRef.current.style.transform = `translateX(-${scrollAmount}%)`
     }
   }, [currentIndex, itemsPerView])
@@ -132,15 +138,23 @@ export function GallerySection() {
             <div
               ref={scrollRef}
               className="flex transition-transform duration-500 ease-in-out"
-              style={{ width: `${galleryImages.length * (100 / itemsPerView)}%` }}
+              style={{ 
+                width: itemsPerView === 1 
+                  ? `${galleryImages.length * 100}%` 
+                  : `${galleryImages.length * (100 / itemsPerView)}%` 
+              }}
             >
               {galleryImages.map((image, index) => (
                 <div
                   key={index}
                   className="flex-shrink-0 px-1 md:px-2"
-                  style={{ width: `${100 / galleryImages.length}%` }}
+                  style={{ 
+                    width: itemsPerView === 1 
+                      ? `${100 / galleryImages.length}%` 
+                      : `${100 / galleryImages.length}%` 
+                  }}
                 >
-                  <div className="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] rounded-lg overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10 mx-auto">
+                  <div className="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] rounded-lg overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10">
                     <Image
                       src={image}
                       alt={`Gallery image ${index + 1}`}
@@ -165,7 +179,11 @@ export function GallerySection() {
 
           {/* Pagination Dots */}
           <div className="flex justify-center mt-4 md:mt-6 lg:mt-8 space-x-1 md:space-x-2">
-            {Array.from({ length: Math.ceil(galleryImages.length / itemsPerView) }).map((_, index) => (
+            {Array.from({ 
+              length: itemsPerView === 1 
+                ? galleryImages.length 
+                : Math.ceil(galleryImages.length / itemsPerView) 
+            }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => {

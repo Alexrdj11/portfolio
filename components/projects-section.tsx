@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
-import { Github, ExternalLink } from "lucide-react"
+import { Github } from "lucide-react"
 
 const projects = [
 	{
@@ -109,20 +109,6 @@ export function ProjectsSection() {
 										<Github size={16} />
 										View 
 									</motion.a>
-
-									{project.liveDemo && (
-										<motion.a
-											href={project.liveDemo}
-											target="_blank"
-											rel="noopener noreferrer"
-											whileHover={{ scale: 1.1 }}
-											whileTap={{ scale: 0.9 }}
-											className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg font-semibold text-sm glow"
-										>
-											<ExternalLink size={16} />
-											Play It Here
-										</motion.a>
-									)}
 								</div>
 							</div>
 						</motion.div>
