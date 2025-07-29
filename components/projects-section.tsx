@@ -37,7 +37,6 @@ const projects = [
 		tech: ["Python", "flask"],
 		image: "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-illustration-1920x640-2.jpg",
 		github: "https://github.com/harsha/data-analytics-dashboard",
-		liveDemo: "https://astroverse-py1game-3.onrender.com/",
 	},
 ]
 
