@@ -80,12 +80,14 @@ export function GallerySection() {
   // Smooth scroll to current image
   useEffect(() => {
     if (scrollRef.current) {
-      // For mobile (1 item per view), use simple percentage calculation
-      // For desktop/tablet, use grouped calculation
-      const scrollAmount = itemsPerView === 1 
-        ? currentIndex * 100 
-        : currentIndex * (100 / itemsPerView)
-      scrollRef.current.style.transform = `translateX(-${scrollAmount}%)`
+      if (itemsPerView === 1) {
+        // Mobile: No transform needed since we show only current image
+        scrollRef.current.style.transform = 'translateX(0%)'
+      } else {
+        // Desktop/Tablet: Use grouped calculation
+        const scrollAmount = currentIndex * (100 / itemsPerView)
+        scrollRef.current.style.transform = `translateX(-${scrollAmount}%)`
+      }
     }
   }, [currentIndex, itemsPerView])
 
@@ -140,40 +142,55 @@ export function GallerySection() {
               className="flex transition-transform duration-500 ease-in-out"
               style={{ 
                 width: itemsPerView === 1 
-                  ? `${galleryImages.length * 100}%` 
+                  ? '100%'  // Simple 100% width for mobile
                   : `${galleryImages.length * (100 / itemsPerView)}%` 
               }}
             >
-              {galleryImages.map((image, index) => (
-                <div
-                  key={index}
-                  className="flex-shrink-0 px-1 md:px-2"
-                  style={{ 
-                    width: itemsPerView === 1 
-                      ? `${100 / galleryImages.length}%` 
-                      : `${100 / galleryImages.length}%` 
-                  }}
-                >
-                  <div className="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] rounded-lg overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10">
+              {itemsPerView === 1 ? (
+                // Mobile: Show only current image
+                <div className="w-full flex-shrink-0 px-1">
+                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10">
                     <Image
-                      src={image}
-                      alt={`Gallery image ${index + 1}`}
+                      src={galleryImages[currentIndex]}
+                      alt={`Gallery image ${currentIndex + 1}`}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      priority={index < 3}
+                      sizes="100vw"
+                      priority={true}
                       onError={(e) => {
-                        console.log(`Failed to load image: ${image}`)
-                        // Hide broken images
-                        const target = e.target as HTMLImageElement
-                        if (target.parentElement) {
-                          target.parentElement.style.display = 'none'
-                        }
+                        console.log(`Failed to load image: ${galleryImages[currentIndex]}`)
                       }}
                     />
                   </div>
                 </div>
-              ))}
+              ) : (
+                // Desktop/Tablet: Show all images in flex container
+                galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 px-1 md:px-2"
+                    style={{ width: `${100 / galleryImages.length}%` }}
+                  >
+                    <div className="relative aspect-[4/3] md:aspect-[16/10] lg:aspect-[16/9] rounded-lg overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-white/10">
+                      <Image
+                        src={image}
+                        alt={`Gallery image ${index + 1}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 50vw, 33vw"
+                        priority={index < 3}
+                        onError={(e) => {
+                          console.log(`Failed to load image: ${image}`)
+                          const target = e.target as HTMLImageElement
+                          if (target.parentElement) {
+                            target.parentElement.style.display = 'none'
+                          }
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
