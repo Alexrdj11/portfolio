@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Orbitron, Poppins } from "next/font/google"
+import { Orbitron, Poppins, Montserrat, Anton } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
@@ -17,6 +17,21 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: "swap",
+})
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-montserrat",
+  display: "swap",
+})
+
+// Anton only provides a single weight; supply it explicitly for next/font typing
+const anton = Anton({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-anton",
   display: "swap",
 })
 
@@ -55,7 +70,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${orbitron.variable} ${poppins.variable} font-poppins antialiased`}>
+      <body className={`${orbitron.variable} ${poppins.variable} ${montserrat.variable} ${anton.variable} font-poppins antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
             <ConstellationBackground />

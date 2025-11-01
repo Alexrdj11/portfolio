@@ -40,7 +40,7 @@ const allSkills = [
   { name: "GraphQL", icon: SiGraphql },
 ]
 
-export function HeroSection() {
+export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
   const scrollToProjects = () => {
     const projectsSection = document.getElementById('projects-section')
     if (projectsSection) {
@@ -73,7 +73,7 @@ export function HeroSection() {
   }
 
   return (
-    <div className="relative z-10 text-center px-4 w-full">
+    <div className={`relative z-10 px-4 w-full ${alignLeft ? 'text-left' : 'text-center'}`}>
       {/* Hero Title */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -81,20 +81,21 @@ export function HeroSection() {
         transition={{ duration: 1, delay: 0.5 }}
         className="mb-16"
       >
-        <motion.h1
+  <motion.h1
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-4xl md:text-6xl font-orbitron font-bold mb-6 mx-auto max-w-fit"
-        >
-          <span className="text-gradient">Harsha Jain HJ</span>
+          className={alignLeft ? "text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6 leading-tight mx-0" : "text-4xl md:text-7xl lg:text-8xl font-montserrat font-bold mb-6 leading-tight mx-auto max-w-fit"}>
+        
+          {/* Use Montserrat for a strong, modern heading on the left */}
+          <span className="text-white">Harsha Jain HJ</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="text-xl md:text-2xl text-gray-300 mb-8 mx-auto text-left max-w-fit"
+          className={`text-lg md:text-xl text-gray-300 mb-8 ${alignLeft ? 'mx-0 max-w-xl' : 'mx-auto text-left max-w-fit'}`}
         >
           HELLO FRIEND...<br />
           let's Engineer something extraordinary
@@ -104,7 +105,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.6 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          className={`flex flex-col sm:flex-row gap-4 ${alignLeft ? 'justify-start' : 'justify-center'} mb-16`}
         >
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)" }}

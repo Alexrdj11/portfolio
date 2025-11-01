@@ -4,27 +4,26 @@ import { AboutSection } from "@/components/about-section"
 import { ProjectsSection } from "@/components/projects-section"
 import { GallerySection } from "@/components/gallery-section"
 import { SkillsSection } from "@/components/skills-section"
-import dynamic from "next/dynamic"
-
-// Dynamically import EarthGlobe to prevent SSR issues
-const EarthGlobe = dynamic(() => import("@/components/earth-globe"), {
-  ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 -z-10 overflow-hidden bg-[#050816]">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-cyan-900/20" />
-    </div>
-  )
-})
+// atom visualization removed — kept layout placeholder
 
 export default function HomePage() {
   return (
     <div className="relative">
       {/* Hero Section with 3D Globe */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <EarthGlobe />
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <div className="lg:col-span-7">
+              <HeroSection alignLeft />
+            </div>
+
+            <div className="lg:col-span-5 flex justify-center items-center pointer-events-none">
+              <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
+                {/* visualization removed */}
+              </div>
+            </div>
+          </div>
         </div>
-        <HeroSection />
       </section>
 
       {/* About Section */}

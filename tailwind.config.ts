@@ -13,6 +13,8 @@ const config: Config = {
       fontFamily: {
         orbitron: ["var(--font-orbitron)", "monospace"],
         poppins: ["var(--font-poppins)", "sans-serif"],
+        montserrat: ["var(--font-montserrat)", "sans-serif"],
+        anton: ["var(--font-anton)", "sans-serif"],
       },
       colors: {
         background: "hsl(var(--background))",
