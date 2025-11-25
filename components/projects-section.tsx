@@ -1,140 +1,192 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
-import { Github } from "lucide-react"
+import { useRef, useState } from 'react'
+import { Github, ExternalLink } from 'lucide-react'
+import { DecryptedText } from './ui/decrypted-text'
+import Link from 'next/link'
 
 const projects = [
 	{
-		title: "FINT - Food Image Nutritional Tracker",
-		description:
-			"FINT- is a web application that allows users to upload food images and get nutritional information using a pre-trained VGG-16 model.",
-		tech: ["Python", "TensorFlow", "streamlit","machine-learning- vgg-16"],
-		image: "https://cdn-ljoih.nitrocdn.com/oBFKmyoZXFdGDWuOfBnqVxXuxCObplGb/assets/images/optimized/rev-11d4bee/i0.wp.com/sanshreefoods.com/wp-content/uploads/2025/04/0ee7b2401e17e0186f23d34b0e5fbf86.benefits-of-tracking-calories-2.jpg",
-		github: "https://github.com/Alexrdj11/FINT",
+		id: "expense-tracker",
+		title: "XP- start tracking your expenses with ease ",
+		description: "Finding it hard to track your expenses? Use XP to effortlessly monitor and manage your spending habits.",
+		tech: ["JAVA", "Spring-Boot", "JDBC", "React","Aiven","Render"],
+		image: "/projects/xp-expense-tracker.png",
+		github: "https://github.com/Alexrdj11/Expense-tracker.git",
+		link: "https://expense-tracker-five-omega-76.vercel.app/register",
+		year: "2025",
+		color: "from-purple-600/30 to-pink-600/30"
 	},
 	{
-		title: "Melanocytic Nevi Classification",
-		description:
-			"A web application that classifies melanocytic nevi using a pre-trained ResNet50 model.",
-		tech: ["Python", "machine-learning", "transfer-learning","resnet-50", "flask"],
-		image: "https://towardsdatascience.com/wp-content/uploads/2022/08/0tH9evuOFqk8F41FG.png",
-		github: "https://github.com/Alexrdj11/melanocytic_nevi_diagnosis",
+		id: "PGFlow",
+		title: "PG tenant payment flow automation",
+		description: "An automated system to streamline monitoring and managing tenant payments in paying guest accommodations, reducing manual effort and errors.",
+		tech: ["JAVA", "Spring-boot", "Firebase", "n8n"],
+		image: "/projects/PGFlow.png",
+		github: "https://github.com/Alexrdj11/PGFlow.git",
+		link: "https://github.com/Alexrdj11/PGFlow.git",
+		year: "2025",
+		color: "from-blue-600/30 to-cyan-600/30"
 	},
 	{
-		title: "Move Mentor",
-		description:
-			"A real time school/college bus ETA along with live tracking and student attendence and driver dashboard",
-		tech: ["Flask", "google-maps-API", "typescript", "js"],
-		image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScx9U8gEuDO1NNilGxno3FYZKOjK9zG3Sj2Q&s",
-		github: "https://github.com/The-Ciphnex/Move_Mentor-draft.git",
+		id: "FLDDoS",
+		title: "Privacy preserving DDoS detection using Federated Learning across Distributed Systems",
+		description: "Federated Learning based DDoS detection with data poisoning resistance.",
+		tech: ["Python", "Flower-framework", "Tensorflow", "Docker", "CICDDoS2019 Dataset"],
+		image: "/projects/FLDDoS.png",
+		github: "https://github.com/HemanthKumar-CS/Fedrated_DDoS_Detection.git",
+		link: "https://github.com/HemanthKumar-CS/Fedrated_DDoS_Detection.git",
+		year: "2024-25",
+		color: "from-pink-600/30 to-purple-600/30"
 	},
 	{
-		title: "Astroventure- A space based interactive quiz game",
-		description:
-			"A space-themed interactive quiz game that tests your knowledge about the universe, understand the reason behind the answers and share your achivements with your friends",
+		id: "melanocytic-nevi-classification",
+		title: "Melanocytic Nevi Classification Using Transfer Learning",
+		description: "A melanocytic nevi classification system using Transfer Learning to assist in early detection of skin cancer.",
+		tech: ["Python", "Flask","Deep-Learning", "Transfer-Learning", "Resnet50"],
+		image: "/projects/melanocytic-nevi.png",
+		github: "https://github.com/Alexrdj11/Melanocytic_Nevi_Classification_Using_Transfer_Learning.git",
+		link: "https://github.com/Alexrdj11/Melanocytic_Nevi_Classification_Using_Transfer_Learning.git",
+		year: "2023-24",
+		color: "from-green-600/30 to-teal-600/30"
+	},
+	{
+		id: "astroventure",
+		title: "Astroventure - Space Quiz Game",
+		description: "A fun space-themed interactive quiz game i vibe coded in my free time, have fun!!",
 		tech: ["Python", "flask"],
 		image: "https://science.nasa.gov/wp-content/uploads/2023/06/solar-system-illustration-1920x640-2.jpg",
-		github: "https://github.com/harsha/data-analytics-dashboard",
-	},
+		github: "https://github.com/Alexrdj11/Astroverse-py1game.git",
+		link: "https://astroverse-py1game-7xyu.vercel.app/",
+		year: "2023-24",
+		color: "from-blue-600/30 to-purple-600/30"
+	}
 ]
 
 export function ProjectsSection() {
-	const ref = useRef(null)
-	const isInView = useInView(ref, { once: true, margin: "-100px" })
-
 	return (
-		<section ref={ref} id="projects-section" className="py-20 px-4">
+		<section id="projects" className="py-32 px-4 md:px-8 relative">
 			<div className="max-w-7xl mx-auto">
-				<motion.div
-					initial={{ opacity: 0, y: 50 }}
-					animate={isInView ? { opacity: 1, y: 0 } : {}}
-					transition={{ duration: 0.8 }}
-					className="text-center mb-16"
-				>
-					<h2 className="text-4xl md:text-5xl font-orbitron font-bold text-color white">
-						A small section of my projects.
-					</h2>
-					
-				</motion.div>
-
+			<DecryptedText
+				as="h2"
+				text="My works"
+				className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-24 text-white"
+				speed={40}
+				triggerOnView={true}
+				triggerOnHover={true}
+			/>
+				
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 					{projects.map((project, index) => (
-						<motion.div
-							key={index}
-							initial={{ opacity: 0, y: 50 }}
-							animate={isInView ? { opacity: 1, y: 0 } : {}}
-							transition={{ duration: 0.8, delay: index * 0.2 }}
-							whileHover={{ scale: 1.05, rotateY: 5 }}
-							className="glass rounded-xl overflow-hidden glass-hover group"
-						>
-							<div className="relative overflow-hidden">
-								<img
-									src={project.image || "/placeholder.svg"}
-									alt={project.title}
-									className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-							</div>
-
-							<div className="p-6">
-								<h3 className="text-xl font-semibold mb-3 text-gradient">
-									{project.title}
-								</h3>
-								<p className="text-gray-300 mb-4 text-justify">
-									{project.description}
-								</p>
-
-								<div className="flex flex-wrap gap-2 mb-4">
-									{project.tech.map((tech, techIndex) => (
-										<span
-											key={techIndex}
-											className="px-3 py-1 text-sm bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30"
-										>
-											{tech}
-										</span>
-									))}
-								</div>
-
-								<div className="flex justify-center gap-3">
-									<motion.a
-										href={project.github}
-										target="_blank"
-										rel="noopener noreferrer"
-										whileHover={{ scale: 1.1 }}
-										whileTap={{ scale: 0.9 }}
-										className="flex items-center gap-2 px-4 py-2 glass glass-hover rounded-lg font-semibold text-sm"
-									>
-										<Github size={16} />
-										View 
-									</motion.a>
-								</div>
-							</div>
-						</motion.div>
+						<ProjectCard key={index} project={project} index={index} />
 					))}
 				</div>
 
-				{/* Checkout more button */}
-				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={isInView ? { opacity: 1, y: 0 } : {}}
-					transition={{ duration: 0.8, delay: 0.8 }}
-					className="text-center mt-12"
-				>
-					<motion.a
+				<div className="flex justify-center mt-32">
+					<a
 						href="https://github.com/Alexrdj11"
 						target="_blank"
 						rel="noopener noreferrer"
-						whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)" }}
-						whileTap={{ scale: 0.95 }}
-						className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full font-semibold text-lg glow transition-all duration-300 cursor-pointer"
+						className="group relative"
 					>
-						<Github size={20} />
-						Checkout more
-					</motion.a>
-				</motion.div>
+						{/* Corner highlights */}
+						<div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						<div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						<div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						<div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+						
+						<div className="px-8 py-4 border border-white/20 relative overflow-hidden transition-all duration-300 group-hover:bg-white/10">
+							<span className="relative z-10 text-white font-semibold transition-colors duration-300 group-hover:text-cyan-400">
+								View All Projects on GitHub
+							</span>
+						</div>
+					</a>
+				</div>
 			</div>
 		</section>
+	)
+}
+
+function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
+	const cardRef = useRef<HTMLDivElement>(null)
+	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (!cardRef.current) return
+		const rect = cardRef.current.getBoundingClientRect()
+		setMousePosition({
+			x: e.clientX - rect.left,
+			y: e.clientY - rect.top
+		})
+	}
+
+	return (
+		<Link href={`/projects/${project.id}`}>
+			<div
+				ref={cardRef}
+				onMouseMove={handleMouseMove}
+				className="group relative bg-zinc-900/50 border border-white/10 overflow-hidden cursor-pointer h-full flex flex-col"
+			>
+				{/* Spotlight effect */}
+				<div
+					className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+					style={{
+						background: `radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.15), transparent 70%)`
+					}}
+				/>
+
+				{/* Corner highlights */}
+				<div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+				<div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+				<div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+				<div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+
+				{/* Image */}
+				<div className="relative h-48 overflow-hidden">
+					<img
+						src={project.image}
+						alt={project.title}
+						className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+					/>
+					<div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent" />
+				</div>
+
+				{/* Content */}
+				<div className="p-6 flex-1 flex flex-col relative z-10">
+					<div className="flex items-start justify-between mb-3">
+						<h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+							<DecryptedText
+								text={project.title}
+								speed={20}
+								triggerOnView={false}
+								triggerOnHover={true}
+								as="span"
+							/>
+						</h3>
+					</div>
+
+					<p className="text-gray-400 text-sm mb-4 flex-1">
+						{project.description}
+					</p>
+
+					{/* Tech stack */}
+					<div className="flex flex-wrap gap-2 mb-4">
+						{project.tech.map((tech, i) => (
+							<span
+								key={i}
+								className="px-2 py-1 text-xs bg-white/5 text-gray-300 border border-white/10"
+							>
+								{tech}
+							</span>
+						))}
+					</div>
+
+					{/* Footer */}
+					<div className="flex items-center justify-between text-sm">
+						<span className="text-gray-500">{project.year}</span>
+					</div>
+				</div>
+			</div>
+		</Link>
 	)
 }

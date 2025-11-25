@@ -10,23 +10,19 @@ import {
 } from "react-icons/si"
 import { BiData, BiBrain, BiServer } from "react-icons/bi"
 import { FaJava } from "react-icons/fa"
+import { DecryptedText } from "@/components/ui/decrypted-text"
 
 // All skills for the scrolling marquee with their icons
 const allSkills = [
   { name: "Python", icon: SiPython },
   { name: "TensorFlow", icon: SiTensorflow },
-  { name: "JavaScript", icon: SiJavascript },
   { name: "React", icon: SiReact },
-  { name: "Next.js", icon: SiNextdotjs },
   { name: "Machine Learning", icon: BiBrain },
   { name: "Computer Vision", icon: SiOpencv },
-  { name: "Node.js", icon: SiNodedotjs },
   { name: "TypeScript", icon: SiTypescript },
   { name: "Java", icon: FaJava },
   { name: "Flask", icon: SiFlask },
-  { name: "FastAPI", icon: SiFastapi },
   { name: "Docker", icon: SiDocker },
-  { name: "AWS", icon: SiAmazonwebservices },
   { name: "Git", icon: SiGit },
   { name: "MongoDB", icon: SiMongodb },
   { name: "SQL", icon: BiData },
@@ -37,17 +33,15 @@ const allSkills = [
   { name: "HTML5", icon: SiHtml5 },
   { name: "Tailwind CSS", icon: SiTailwindcss },
   { name: "REST APIs", icon: BiServer },
-  { name: "GraphQL", icon: SiGraphql },
 ]
 
 export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById('projects-section')
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' })
-    }
+  const scrollDown = () => {
+    window.scrollBy({
+      top: window.innerHeight * 0.8,
+      behavior: 'smooth'
+    })
   }
-
   const handleDownloadResume = async () => {
     try {
       const response = await fetch('/api/download-resume')
@@ -81,6 +75,15 @@ export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
         transition={{ duration: 1, delay: 0.5 }}
         className="mb-16"
       >
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className={`text-sm md:text-base text-gray-400 mb-2 ${alignLeft ? 'mx-0' : 'mx-auto text-left max-w-fit'}`}
+        >
+          Hey there I am,
+        </motion.p>
+
   <motion.h1
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -88,7 +91,13 @@ export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
           className={alignLeft ? "text-5xl md:text-6xl lg:text-7xl font-montserrat font-bold mb-6 leading-tight mx-0" : "text-4xl md:text-7xl lg:text-8xl font-montserrat font-bold mb-6 leading-tight mx-auto max-w-fit"}>
         
           {/* Use Montserrat for a strong, modern heading on the left */}
-          <span className="text-white">Harsha Jain HJ</span>
+          <DecryptedText 
+            text="Harsha Jain" 
+            className="text-white"
+            speed={40}
+            triggerOnView={true}
+            triggerOnHover={true}
+          />
         </motion.h1>
 
         <motion.p
@@ -97,42 +106,16 @@ export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
           transition={{ duration: 0.8, delay: 1.2 }}
           className={`text-lg md:text-xl text-gray-300 mb-8 ${alignLeft ? 'mx-0 max-w-xl' : 'mx-auto text-left max-w-fit'}`}
         >
-          HELLO FRIEND...<br />
-          let's Engineer something extraordinary
+          
+          Java Full Stack Developer • Creative Builder
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-          className={`flex flex-col sm:flex-row gap-4 ${alignLeft ? 'justify-start' : 'justify-center'} mb-16`}
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.8)" }}
-            whileTap={{ scale: 0.95 }}
-            onClick={scrollToProjects}
-            className="px-8 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full font-semibold glow transition-all duration-300 cursor-pointer"
-          >
-            Explore My Work
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleDownloadResume}
-            className="px-8 py-3 glass glass-hover rounded-full font-semibold transition-all duration-300 cursor-pointer"
-          >
-            Download Resume
-          </motion.button>
-        </motion.div>
-      </motion.div>
 
       {/* Skills Marquee */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2 }}
-        className="relative overflow-hidden mb-8 mt-16 sm:mt-24 mx-4 sm:mx-8 md:mx-16 lg:mx-32"
+        className="relative overflow-hidden mb-8"
       >
         {/* Gradient overlays for fade effect */}
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
@@ -154,6 +137,7 @@ export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
           })}
         </div>
       </motion.div>
+      </motion.div>
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -165,7 +149,7 @@ export function HeroSection({ alignLeft }: { alignLeft?: boolean }) {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
           className="text-white cursor-pointer"
-          onClick={scrollToProjects}
+          onClick={scrollDown}
         >
           <ChevronDown size={32} />
         </motion.div>

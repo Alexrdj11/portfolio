@@ -2,13 +2,17 @@
 import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
 import { ProjectsSection } from "@/components/projects-section"
-import { GallerySection } from "@/components/gallery-section"
-import { SkillsSection } from "@/components/skills-section"
-// atom visualization removed — kept layout placeholder
+import { TechStack } from "@/components/tech-stack"
+import { WorkTogether } from "@/components/work-together"
+import { InteractiveParticles } from "@/components/interactive-particles"
+import { TerminalSimulator } from "@/components/terminal-simulator"
+import GradualBlur from "@/components/ui/GradualBlur"
 
 export default function HomePage() {
   return (
-    <div className="relative">
+    <div className="relative pb-32">
+      <InteractiveParticles />
+      
       {/* Hero Section with 3D Globe */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="container mx-auto px-6">
@@ -17,13 +21,24 @@ export default function HomePage() {
               <HeroSection alignLeft />
             </div>
 
-            <div className="lg:col-span-5 flex justify-center items-center pointer-events-none">
-              <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
-                {/* visualization removed */}
+            <div className="lg:col-span-5 flex justify-center items-center">
+              <div className="w-full h-56 sm:h-64 lg:h-80 max-w-xl">
+                <TerminalSimulator />
               </div>
             </div>
           </div>
         </div>
+        
+        <GradualBlur
+          target="page"
+          position="bottom"
+          height="8rem"
+          strength={2}
+          divCount={8}
+          curve="bezier"
+          exponential={true}
+          opacity={1}
+        />
       </section>
 
       {/* About Section */}
@@ -32,11 +47,11 @@ export default function HomePage() {
       {/* Projects Section */}
       <ProjectsSection />
 
-      {/* Gallery Section */}
-      <GallerySection />
+      {/* Tech Stack Section */}
+      <TechStack />
 
-      {/* Skills Section */}
-      <SkillsSection />
+      {/* Work Together Section */}
+      <WorkTogether />
     </div>
   )
 }

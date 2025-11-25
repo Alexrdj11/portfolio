@@ -4,16 +4,14 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Sun, Moon, Linkedin, Twitter, Mail } from "lucide-react"
+import { Menu, X, Sun, Moon, Linkedin, Twitter, Mail, Download } from "lucide-react"
 import { useTheme } from "next-themes"
+import GooeyNav from "./GooeyNav"
 
 const navItems = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Projects", href: "/projects" },
-  { name: "Gallery", href: "/gallery" },
-  { name: "Skills", href: "/skills" },
-  { name: "Resume", href: "/resume" },
   { name: "Contact", href: "/contact" },
 ]
 
@@ -35,39 +33,137 @@ export function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass glow" : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 w-full">
           {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-orbitron font-bold text-gradient">
-              HJ
-            </Link>
-          </motion.div>
+          <Link href="/" className="flex-shrink-0">
+            <motion.div 
+              className="text-2xl font-orbitron font-bold text-white relative overflow-hidden"
+              whileHover="hover"
+              initial="initial"
+            >
+              <motion.span
+                className="inline-block"
+                variants={{
+                  initial: { rotate: 0 },
+                  hover: { 
+                    rotate: [0, -10, 10, -10, 0],
+                    transition: { duration: 0.5 }
+                  }
+                }}
+              >
+                H
+              </motion.span>
+              <motion.span
+                className="inline-block"
+                variants={{
+                  initial: { rotate: 0, y: 0 },
+                  hover: { 
+                    rotate: [0, 360],
+                    y: [0, -5, 0],
+                    transition: { duration: 0.6, delay: 0.1 }
+                  }
+                }}
+              >
+                J
+              </motion.span>
+            </motion.div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+          <div className="hidden md:flex flex-1 justify-center">
+            <div className="flex items-center space-x-8">
               {navItems.map((item) => (
-                <motion.div key={item.name} whileHover={{ scale: 1.05 }}>
-                  <Link
-                    href={item.href}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                      pathname === item.href ? "text-cyan-400 glow-cyan" : "text-gray-300 hover:text-white hover:glow"
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                </motion.div>
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 group overflow-hidden ${
+                    pathname === item.href
+                      ? "text-cyan-400"
+                      : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  <span className="relative z-10 block overflow-hidden">
+                    <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">
+                      {item.name}
+                    </span>
+                    <span className="absolute inset-0 inline-block translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                      {item.name}
+                    </span>
+                  </span>
+                  {pathname === item.href && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute inset-0 bg-white/10 rounded-lg backdrop-blur-sm"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                </Link>
               ))}
+              
+              {/* Available for Work Badge */}
+              <div className="ml-4 px-4 py-2 relative group">
+                {/* Corner highlights */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+                <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+                
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <div className="text-xs text-gray-300 overflow-hidden">
+                    <div className="block">Currently</div>
+                    <div className="block overflow-hidden relative h-4">
+                      <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">Available for work</span>
+                      <span className="absolute inset-0 inline-block translate-y-full transition-transform duration-300 group-hover:translate-y-0">Available for work</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Controls */}
           <div className="flex items-center space-x-4">
+            {/* Resume Button */}
+            <a
+              href="/resume/resume.pdf"
+              download
+              className="hidden md:flex items-center gap-2 relative group px-4 py-2"
+            >
+              {/* Corner highlights */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+              
+              <Download size={16} className="text-white" />
+              <div className="text-sm font-semibold text-white overflow-hidden relative h-5">
+                <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">RESUME</span>
+                <span className="absolute inset-0 inline-block translate-y-full transition-transform duration-300 group-hover:translate-y-0">RESUME</span>
+              </div>
+            </a>
+
+            {/* Hire Me Button */}
+            <Link
+              href="/contact"
+              className="hidden md:block relative group px-4 py-2"
+            >
+              {/* Corner highlights */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+              
+              <div className="text-sm font-semibold text-white overflow-hidden relative h-5">
+                <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">HIRE ME</span>
+                <span className="absolute inset-0 inline-block translate-y-full transition-transform duration-300 group-hover:translate-y-0">HIRE ME</span>
+              </div>
+            </Link>
+
             {/* Social Media Links */}
             <motion.a
               href="https://www.linkedin.com/in/harsha-jain-469377253/"
@@ -75,7 +171,7 @@ export function Navigation() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full glass glass-hover"
+              className="p-2"
               aria-label="LinkedIn Profile"
             >
               <Linkedin size={20} className="text-gray-300 hover:text-blue-400" />
@@ -87,7 +183,7 @@ export function Navigation() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full glass glass-hover"
+              className="p-2"
               aria-label="Twitter Profile"
             >
               <Twitter size={20} className="text-gray-300 hover:text-cyan-400" />
@@ -97,21 +193,11 @@ export function Navigation() {
               href="mailto:harshahjain4@gmail.com"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-2 rounded-full glass glass-hover"
+              className="p-2"
               aria-label="Send Email"
             >
               <Mail size={20} className="text-gray-300 hover:text-green-400" />
             </motion.a>
-
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full glass glass-hover"
-            >
-              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-            </motion.button>
 
             {/* Mobile menu button */}
             <div className="md:hidden">
@@ -119,7 +205,7 @@ export function Navigation() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-full glass glass-hover"
+                className="p-2"
               >
                 {isOpen ? <X size={20} /> : <Menu size={20} />}
               </motion.button>

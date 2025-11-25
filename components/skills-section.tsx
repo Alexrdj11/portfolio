@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { DecryptedText } from "@/components/ui/decrypted-text"
 
 // Skills organized by categories
 const skillsData = {
@@ -21,9 +22,14 @@ export function SkillsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Skills
-          </h2>
+          <DecryptedText 
+            as="h2"
+            text="Skills" 
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
+            speed={40}
+            triggerOnView={true}
+            triggerOnHover={true}
+          />
         </motion.div>
 
         <motion.div
