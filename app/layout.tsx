@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Orbitron, Poppins, Montserrat, Anton, Bebas_Neue } from "next/font/google"
+import { Orbitron, Poppins, Montserrat, Anton, Bebas_Neue, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
@@ -42,6 +42,13 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 })
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+})
+
 export const metadata: Metadata = {
   title: "HJ_Industries",
   description: "Portfolio of a developer specializing in AI, ML, and software development.",
@@ -77,7 +84,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${orbitron.variable} ${poppins.variable} ${montserrat.variable} ${anton.variable} ${bebasNeue.variable} font-poppins antialiased`}>
+      <body className={`${orbitron.variable} ${poppins.variable} ${montserrat.variable} ${anton.variable} ${bebasNeue.variable} ${spaceGrotesk.variable} font-poppins antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
             <ConstellationBackground />

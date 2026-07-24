@@ -33,16 +33,16 @@ export function InteractiveParticles() {
 
     // Initialize particles
     const initParticles = () => {
-      const particleCount = Math.floor((canvas.width * canvas.height) / 15000)
+      const particleCount = Math.floor((canvas.width * canvas.height) / 28000)
       particlesRef.current = []
 
       for (let i = 0; i < particleCount; i++) {
         particlesRef.current.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          radius: Math.random() * 2 + 1
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2,
+          radius: Math.random() * 1.2 + 0.6
         })
       }
     }
@@ -80,19 +80,20 @@ export function InteractiveParticles() {
         const maxDistance = 150
 
         if (distance < maxDistance) {
-          const force = (1 - distance / maxDistance) * 0.6
-          particle.vx += (dx / distance) * force * 0.05
-          particle.vy += (dy / distance) * force * 0.05
+          const safeDistance = Math.max(distance, 0.001)
+          const force = (1 - distance / maxDistance) * 0.35
+          particle.vx += (dx / safeDistance) * force * 0.025
+          particle.vy += (dy / safeDistance) * force * 0.025
         }
 
         // Apply friction
-        particle.vx *= 0.98
-        particle.vy *= 0.98
+        particle.vx *= 0.992
+        particle.vy *= 0.992
 
         // Draw particle
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.36)'
         ctx.fill()
 
         // Draw connections
@@ -103,7 +104,7 @@ export function InteractiveParticles() {
           const maxConnectionDistance = 120
 
           if (distance < maxConnectionDistance) {
-            const opacity = (1 - distance / maxConnectionDistance) * 0.5
+            const opacity = (1 - distance / maxConnectionDistance) * 0.18
             ctx.beginPath()
             ctx.moveTo(particle.x, particle.y)
             ctx.lineTo(otherParticle.x, otherParticle.y)
@@ -120,18 +121,18 @@ export function InteractiveParticles() {
         const mouseMaxDistance = 200
 
         if (mouseDistance < mouseMaxDistance) {
-          const opacity = (1 - mouseDistance / mouseMaxDistance) * 0.8
+          const opacity = (1 - mouseDistance / mouseMaxDistance) * 0.38
           ctx.beginPath()
           ctx.moveTo(particle.x, particle.y)
           ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(100, 200, 255, ${opacity})`
-          ctx.lineWidth = 1.5
+          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`
+          ctx.lineWidth = 1
           ctx.stroke()
 
           // Draw glow at mouse
           ctx.beginPath()
-          ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2)
-          ctx.fillStyle = 'rgba(100, 200, 255, 0.6)'
+          ctx.arc(mouse.x, mouse.y, 2.5, 0, Math.PI * 2)
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.28)'
           ctx.fill()
         }
       })

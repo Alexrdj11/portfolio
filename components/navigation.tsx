@@ -18,6 +18,7 @@ const navItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
 
@@ -29,11 +30,33 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (pathname !== "/") {
+      setIsVisible(true)
+      return
+    }
+
+    const revealNav = () => setIsVisible(true)
+    const timeoutId = window.setTimeout(revealNav, 6000)
+
+    window.addEventListener("mousemove", revealNav)
+    window.addEventListener("pointerdown", revealNav)
+    window.addEventListener("touchstart", revealNav)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      window.removeEventListener("mousemove", revealNav)
+      window.removeEventListener("pointerdown", revealNav)
+      window.removeEventListener("touchstart", revealNav)
+    }
+  }, [pathname])
+
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent"
+      initial={false}
+      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: -24 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent ${isVisible ? "pointer-events-auto" : "pointer-events-none"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 w-full">
