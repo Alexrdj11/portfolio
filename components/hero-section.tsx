@@ -86,7 +86,7 @@ export function HeroSection() {
             className="mb-3 text-[0.65rem] uppercase tracking-[0.42em] text-white/50 sm:text-xs"
             style={{ fontFamily: "var(--font-space-grotesk)" }}
           >
-            Hello, I&apos;m
+            Hi, I&apos;m
           </motion.p>
 
           <motion.h1
@@ -158,7 +158,7 @@ export function HeroSection() {
           className="mb-4 text-xs uppercase tracking-[0.35em] text-white/55 sm:text-sm"
           style={{ fontFamily: "var(--font-space-grotesk)" }}
         >
-          Hello, I&apos;m
+          Hi, I&apos;m
         </motion.p>
 
         <motion.h1

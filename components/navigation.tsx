@@ -170,22 +170,7 @@ export function Navigation() {
               </div>
             </a>
 
-            {/* Hire Me Button */}
-            <Link
-              href="/contact"
-              className="hidden md:block relative group px-4 py-2"
-            >
-              {/* Corner highlights */}
-              <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
-              <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
-              
-              <div className="text-sm font-semibold text-white overflow-hidden relative h-5">
-                <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">HIRE ME</span>
-                <span className="absolute inset-0 inline-block translate-y-full transition-transform duration-300 group-hover:translate-y-0">HIRE ME</span>
-              </div>
-            </Link>
+            
 
             {/* Social Media Links */}
             <motion.a

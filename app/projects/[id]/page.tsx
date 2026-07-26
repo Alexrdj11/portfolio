@@ -73,7 +73,7 @@ const projectsData: Record<string, any> = {
       "An easy to understand attack detection and monitoring dashboard "
     ],
     learnings: "Preprocessed the CICDDoS2019 dataset,sampled dataset from 23.9gb to 2.24gb[50k records],reduced features from 88 to 30+2, balanced dataset 25k as benign and 25k as attack, implemented the federated learning setup using Flower framework and compared multi-krum with hybrid data-poisoning resilent aggregation techniques.",
-    paperPath: "/papers/flddos-paper.pdf"
+    paperPath: "https://doi.org/10.1109/ICAFT66710.2025.11452998"
   },
   "melanocytic-nevi-classification": {
     title: "Melanocytic nevi classification",
