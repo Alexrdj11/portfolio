@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { Github, ExternalLink } from 'lucide-react'
 import { DecryptedText } from './ui/decrypted-text'
 import Link from 'next/link'
+import { usePageTransition } from './transition-provider'
 
 const projects = [
 	{
@@ -109,30 +110,64 @@ export function ProjectsSection() {
 
 function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
 	const cardRef = useRef<HTMLDivElement>(null)
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+	const badgeRef = useRef<HTMLDivElement>(null)
+	const spotlightRef = useRef<HTMLDivElement>(null)
+	const [isHovered, setIsHovered] = useState(false)
+	const { navigate } = usePageTransition()
 
 	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (!cardRef.current) return
 		const rect = cardRef.current.getBoundingClientRect()
-		setMousePosition({
-			x: e.clientX - rect.left,
-			y: e.clientY - rect.top
-		})
+		const x = e.clientX - rect.left
+		const y = e.clientY - rect.top
+
+		if (badgeRef.current) {
+			badgeRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+		}
+		if (spotlightRef.current) {
+			spotlightRef.current.style.background = `radial-gradient(300px circle at ${x}px ${y}px, rgba(255, 255, 255, 0.15), transparent 70%)`
+		}
+	}
+
+	const handleClick = (e: React.MouseEvent) => {
+		e.preventDefault()
+		navigate(`/projects/${project.id}`)
 	}
 
 	return (
-		<Link href={`/projects/${project.id}`}>
+		<div onClick={handleClick}>
 			<div
 				ref={cardRef}
 				onMouseMove={handleMouseMove}
+				onMouseEnter={() => setIsHovered(true)}
+				onMouseLeave={() => setIsHovered(false)}
 				className="group relative bg-zinc-900/50 border border-white/10 overflow-hidden cursor-pointer h-full flex flex-col"
 			>
+				{/* Transparent Square "Click on me" Follow Badge */}
+				<div
+					ref={badgeRef}
+					className={`pointer-events-none absolute left-0 top-0 z-30 flex items-center gap-2 px-3.5 py-2 bg-black/40 backdrop-blur-md border border-cyan-400/40 text-cyan-300 font-mono text-[11px] uppercase tracking-widest shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-opacity duration-200 ease-out ${
+						isHovered ? "opacity-100 scale-100" : "opacity-0 scale-95"
+					}`}
+					style={{
+						willChange: "transform",
+						transform: "translate3d(-100px, -100px, 0)",
+					}}
+				>
+					{/* Corner highlights on badge */}
+					<div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-cyan-400"></div>
+					<div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-cyan-400"></div>
+					<div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-cyan-400"></div>
+					<div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-cyan-400"></div>
+
+					<span>Click on me</span>
+					<ExternalLink className="w-3.5 h-3.5 stroke-[2]" />
+				</div>
+
 				{/* Spotlight effect */}
 				<div
+					ref={spotlightRef}
 					className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-					style={{
-						background: `radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.15), transparent 70%)`
-					}}
 				/>
 
 				{/* Corner highlights */}
@@ -187,6 +222,6 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 					</div>
 				</div>
 			</div>
-		</Link>
+		</div>
 	)
 }

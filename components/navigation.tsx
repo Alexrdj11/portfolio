@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { Menu, X, Sun, Moon, Linkedin, Twitter, Mail, Download } from "lucide-react"
 import { useTheme } from "next-themes"
 import GooeyNav from "./GooeyNav"
+import { usePageTransition } from "@/components/transition-provider"
 
 const navItems = [
   { name: "Home", href: "/" },
@@ -21,6 +22,14 @@ export function Navigation() {
   const [isVisible, setIsVisible] = useState(false)
   const pathname = usePathname()
   const { theme, setTheme } = useTheme()
+  const { navigate } = usePageTransition()
+
+  // Navigate with cinematic transition
+  const handleNav = (href: string) => {
+    if (pathname === href) return   // already here
+    setIsOpen(false)
+    navigate(href)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,9 +108,9 @@ export function Navigation() {
           <div className="hidden md:flex flex-1 justify-center">
             <div className="flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  href={item.href}
+                  onClick={() => handleNav(item.href)}
                   className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 group overflow-hidden ${
                     pathname === item.href
                       ? "text-cyan-400"
@@ -124,7 +133,7 @@ export function Navigation() {
                     />
                   )}
                   <span className="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                </Link>
+                </button>
               ))}
               
               {/* Available for Work Badge */}
@@ -233,16 +242,15 @@ export function Navigation() {
           >
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
-                <Link
+                <button
                   key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
+                  onClick={() => handleNav(item.href)}
+                  className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
                     pathname === item.href ? "text-cyan-400 glow-cyan" : "text-gray-300 hover:text-white hover:glow"
                   }`}
                 >
                   {item.name}
-                </Link>
+                </button>
               ))}
             </div>
           </motion.div>
