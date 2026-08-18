@@ -8,6 +8,159 @@ import GradualBlur from "@/components/ui/GradualBlur"
 import { add } from "date-fns"
 
 const projectsData: Record<string, any> = {
+  "My Metahuman": {
+    id: "My Metahuman",
+    title: "Creating my own metahuman",
+    year: "2026",
+    description: "A complete custom metahuman made from my face scan using unreal engine 5",
+    fullDescription: "An in-depth personal journey building a hyper-realistic MetaHuman avatar inside Unreal Engine 5. From AI 3D mesh generation to mesh decimation, identity solving, overcoming Windows paging file VRAM crashes, and crafting Dark Pictures Anthology-inspired camera animations.",
+    image: "/projects/main_harsha.png",
+    tech: ["Unreal Engine 5", "Blender", "MetaHuman Creator", "Tripo3D"],
+    github: "https://github.com/Alexrdj11/portfolio",
+    liveDemo: "https://portfolio-topaz-gamma-tbzzc6ivbd.vercel.app/",
+    features: [
+      "AI 3D Face Mesh Generation & photogrammetry alternative research",
+      "Mesh Decimation & Topology Optimization (reducing 908,980 triangles)",
+      "Marker Tracking & Custom MetaHuman Identity Solve",
+      "Virtual Memory & Paging File Troubleshooting for High-Res Assembly",
+      "Cinematic Dark Pictures Anthology-style Idle Animations & Camera Tweaks"
+    ],
+    storySteps: [
+      {
+        step: 1,
+        title: "The Photogrammetry Dilemma",
+        paragraphs: [
+          "To begin, I did some research on how I could create a MetaHuman version of myself. The proper approach I found was photogrammetry. Did I choose that? NO.",
+          "I love making my life harder, so instead, I used an AI mesh generator to create a 3D mesh of my face. Needless to say, I would come to regret that decision later."
+        ],
+        image: "/projects/metahuman-1"
+      },
+      {
+        step: 2,
+        title: "Importing to Unreal Engine 5",
+        paragraphs: [
+          "Feeling pretty confident, I imported this mesh into Unreal.",
+          "And yup, that confidence didn't last very long.",
+          "Nothing worked the way I expected. I wasn't ready to believe that my laptop was the problem, so I spent hours searching for solutions..."
+        ],
+        image: "/projects/metahuman-2.jpg"
+      },
+      {
+        step: 3,
+        title: "The Mesh Decimation Crisis",
+        paragraphs: [
+          "Back to research, I stumbled upon something called mesh decimation.",
+          "Apparently, my AI-generated face had...",
+          "454,388 vertices and 908,980 triangles."
+        ],
+        image: "/projects/metahuman-3.jpg"
+      },
+      {
+        step: 4,
+        title: "Identity Solve & Asymmetry Nightmare",
+        paragraphs: [
+          "After enough rounds of decimation, Unreal finally cooperated. I tracked the markers, ran identity solve, and generated my first Metahuman.",
+          "...there was just one tiny problem",
+          "AI had generated my face from a single image, so the right side of the mesh wasn't modelled properly..."
+        ],
+        image: "/projects/metahuman-4.png"
+      },
+      {
+        step: 5,
+        title: "Back to Square One",
+        paragraphs: [
+          "It looked awful, I had 2 choices:",
+          "1. Spend hours trying to fix it in the editor.",
+          "2. Start everything over with a better mesh.",
+          "and i chose the latter, back to square one but the result was a better-looking metahuman"
+        ],
+        image: "/projects/metahuman-5.jpg"
+      },
+      {
+        step: 6,
+        title: "OUT OF VIDEO MEMORY & Paging File Fix",
+        paragraphs: [
+          "I thought i was finally done, I wasn't, the textures wouldn't download, and every time I tried assembling the metahuman, it'd say 'OUT OF VIDEO MEMORY.'",
+          "I restarted Unreal, retried everything, searched forums... Nothing worked ...After hours of digging through Unreal forums and Reddit, I found the culprit. It wasn't my GPU or Unreal.",
+          "It was Windows' paging file.",
+          "Increasing virtual memory finally let the assembly complete.",
+          "Unreal finally stopped trying to ruin my day... I could actually start animating, I spent hours tweaking the camera and idle animations trying to capture the same vibe as the Dark Pictures Anthology menu screens, this has to be my favorite part of the entire project"
+        ],
+        image: "/projects/metahuman-6.jpg"
+      },
+      {
+        step: 7,
+        title: "The Final Showcase & MP4 Decision",
+        paragraphs: [
+          "This entire project was built on free tools and a lot of research. I wanted the MetaHuman to be fully interactive on my portfolio...",
+          "But after weighing the performance and complexity, I decided to render it as an MP4 instead."
+        ],
+        image: "/projects/metahuman-7.jpg"
+      }
+    ],
+    learnings: "Mastered 3D mesh topology decimation, identity solving inside MetaHuman Creator plugin, debugging Unreal Engine memory allocation via Windows virtual memory paging, and cinematic camera sequencing."
+  },
+  "Machine Cost Estimator": {
+    id: "Machine Cost Estimator",
+    title: "Machine Cost Estimator",
+    year: "2026",
+    description: "Simple machine part cost estimation using Gemini AI and NumPy.",
+    fullDescription: "An automated cost estimation tool designed for manufacturing and engineering applications. It utilizes multimodal Gemini AI vision models to extract dimensions and machining features, combined with high-precision NumPy matrix computation to calculate raw stock requirements, machining time, and labor costs instantly.",
+    image: "/projects/machine-part.jpg",
+    tech: ["Python", "Gemini AI", "NumPy", "Flask", "Tailwind CSS"],
+    github: "https://github.com/Alexrdj11/machine-parts-cost-analyzer.git",
+    liveDemo: null,
+    features: [
+      "Multimodal AI drawing analysis & dimension extraction",
+      "NumPy deterministic cost modeling (preventing LLM calculation hallucinations)",
+      "Confidence-based automated approval workflow (80-85% threshold)",
+      "Standard raw-stock size identification & geometric material removal estimation",
+      "One-click JSON and CSV data export capabilities"
+    ],
+    storySteps: [
+      {
+        step: 1,
+        title: "Multimodal AI Drawing Analysis & Feature Extraction",
+        paragraphs: [
+          "A system that analyzes engineering drawings using multimodal AI to extract dimensions and machining features. It identifies suitable standard raw-stock sizes and estimates material removal using geometric calculations. The system also provides material-cost estimates with confidence scores and clearly stated assumptions."
+        ],
+        image: "/projects/Machine_cost-1.png"
+      },
+      {
+        step: 2,
+        title: "Material Type Selection",
+        paragraphs: [
+          "Selection of material type from the material configuration catalog."
+        ],
+        image: "/projects/Machine_cost-2.png"
+      },
+      {
+        step: 3,
+        title: "Deterministic Cost Calculation via NumPy",
+        paragraphs: [
+          "The detailed projection of part details along with cost calculation done using NumPy and not Gemini to reduce chances of errors."
+        ],
+        image: "/projects/Machine_cost-3.png"
+      },
+      {
+        step: 4,
+        title: "Confidence Score Based Approval Workflow",
+        paragraphs: [
+          "The approval done through confidence scores. Suppose the confidence scores are above 80 to 85%, it's taken up for automated approval, but if less than the threshold, it asks for compulsory manual review, reducing the chances of errors."
+        ],
+        image: "/projects/Machine_cost-4.png"
+      },
+      {
+        step: 5,
+        title: "Data Export in JSON & CSV",
+        paragraphs: [
+          "The user can export the screen with the details in either JSON format or in CSV format."
+        ],
+        image: "/projects/Machine_cost-5.png"
+      }
+    ],
+    learnings: "Implemented custom Gemini vision prompting for engineering drawing analysis and numerical cost matrix computations."
+  },
   "expense-tracker": {
     id: "expense-tracker",
     title: "XP - Expense Tracker",
@@ -20,9 +173,9 @@ const projectsData: Record<string, any> = {
       "/projects/xp-screenshot-2.png",
       "/projects/xp-screenshot-3.png"
     ],
-    tech: ["JAVA","Spring-boot", "JWT", "MySQL","React","Render","Aiven","vercel"],
+    tech: ["JAVA", "Spring-boot", "JWT", "MySQL", "React", "Render", "Aiven", "vercel"],
     github: "https://github.com/Alexrdj11/Expense-tracker.git",
-    liveDemo: "https://expense-tracker-five-omega-76.vercel.app/register",
+    liveDemo: "https://expense-tracker-seven-opal.vercel.app/",
     features: [
       "Real-time expense tracking",
       "Category-based organization",
@@ -31,17 +184,17 @@ const projectsData: Record<string, any> = {
       "Import data functionality"
     ],
     specialFeatures: [
-       "Utilizes Aiven MySQL cloud database with SSL/TLS encryption for secure data storage",
-       "JWT-based Authentication: Implements industry-standard JSON Web Token authentication for secure user sessions",
-       "Production-Ready Deployment: Configured for deployment on Render (backend) and Vercel (frontend) with proper environment management",
-       "Certificate-based Security: Custom truststore implementation for enhanced SSL/TLS security with cloud databases"
+      "Utilizes Aiven MySQL cloud database with SSL/TLS encryption for secure data storage",
+      "JWT-based Authentication: Implements industry-standard JSON Web Token authentication for secure user sessions",
+      "Production-Ready Deployment: Configured for deployment on Render (backend) and Vercel (frontend) with proper environment management",
+      "Certificate-based Security: Custom truststore implementation for enhanced SSL/TLS security with cloud databases"
     ],
-    
+
     learnings: "This project provided hands-on experience with enterprise-level security practices, cloud infrastructure, and modern full-stack development patterns. The most valuable lesson was understanding that security and proper configuration are just as important as feature development."
   },
   "PGFlow": {
     title: "PG tenant payment flow automation",
-    year: "2025-ongoing",
+    year: "2026-ongoing",
     description: "An automated system to streamline monitoring and managing tenant payments in paying guest accommodations, reducing manual effort and errors.",
     fullDescription: "PGflow is an automated system designed to simplify the payment monitoring and tracking process for paying guest accomodations",
     image: "/projects/PGFlow.png",
@@ -81,7 +234,7 @@ const projectsData: Record<string, any> = {
     description: "A melanocytic nevi classification system using Transfer Learning to assist in early detection of skin cancer.",
     fullDescription: "This project utilizes Transfer Learning with Resnet50 to classify melanocytic nevi, aiding in the early detection of skin cancer. The system is designed to improve diagnostic accuracy and support medical professionals.",
     image: "/projects/melanocytic-nevi.png",
-    tech: ["Python", "Flask","Deep-Learning", "Transfer-Learning", "Resnet50"],
+    tech: ["Python", "Flask", "Deep-Learning", "Transfer-Learning", "Resnet50"],
     github: "https://github.com/Alexrdj11/Melanocytic_Nevi_Classification_Using_Transfer_Learning.git",
     liveDemo: null,
     features: [
@@ -122,8 +275,18 @@ const projectsData: Record<string, any> = {
 
 export default function ProjectDetailPage() {
   const params = useParams()
-  const projectId = params.id as string
-  const project = projectsData[projectId]
+  const rawId = (params.id as string) || ""
+  const decodedId = decodeURIComponent(rawId)
+  const normalizedKey = decodedId.toLowerCase().replace(/\s+/g, '-')
+  const project =
+    projectsData[decodedId] ||
+    projectsData[rawId] ||
+    projectsData[normalizedKey] ||
+    Object.values(projectsData).find(
+      (p: any) =>
+        p.id?.toLowerCase() === decodedId.toLowerCase() ||
+        p.id?.toLowerCase().replace(/[\s_-]+/g, '') === normalizedKey.replace(/[\s_-]+/g, '')
+    )
 
   if (!project) {
     return (
@@ -290,6 +453,72 @@ export default function ProjectDetailPage() {
             ))}
           </ul>
         </motion.div>
+
+        {/* Interactive Story Steps Timeline (MetaHuman & Narrated Projects) */}
+        {project.storySteps && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="mb-20"
+          >
+            <div className="flex items-center gap-4 mb-12">
+              <div className="h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent flex-1" />
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight text-center">
+                Implementation Insights
+              </h2>
+              <div className="h-px bg-gradient-to-r from-transparent via-cyan-500 to-transparent flex-1" />
+            </div>
+
+            <div className="space-y-16">
+              {project.storySteps.map((step: any, idx: number) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-zinc-900/90 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300"
+                >
+                  {/* Subtle Corner Highlights & Accent Glow */}
+                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-cyan-500/20 transition-all duration-500" />
+
+                  {/* Step Badge & Title */}
+                  <div className="flex flex-wrap items-center gap-3 mb-6">
+                    <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-mono rounded-full uppercase tracking-widest font-semibold">
+                      Step 0{step.step || idx + 1}
+                    </span>
+                    {step.title && (
+                      <h3 className="text-xl md:text-2xl font-bold text-white">
+                        {step.title}
+                      </h3>
+                    )}
+                  </div>
+
+                  {/* Narrative Paragraphs */}
+                  <div className="space-y-4 mb-8 text-gray-300 text-base md:text-lg leading-relaxed">
+                    {step.paragraphs.map((para: string, pIdx: number) => (
+                      <p key={pIdx} className="text-gray-300">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Image associated with this step */}
+                  {step.image && (
+                    <div className="relative rounded-xl overflow-hidden border border-white/15 bg-zinc-950 shadow-xl group-hover:border-cyan-500/40 transition-colors duration-300">
+                      <img
+                        src={step.image}
+                        alt={`MetaHuman Step ${step.step || idx + 1}`}
+                        className="w-full max-h-[600px] object-contain mx-auto transition-transform duration-500 group-hover:scale-[1.01]"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Additional Screenshots - First Two */}
         {project.additionalImages && project.additionalImages.length >= 2 && (
@@ -460,7 +689,7 @@ export default function ProjectDetailPage() {
                   className="w-full h-full pointer-events-none"
                   title="Published Research Paper Preview"
                 />
-                
+
                 {/* View Paper Overlay */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="text-center">
@@ -498,7 +727,7 @@ export default function ProjectDetailPage() {
                   className="w-full h-full pointer-events-none"
                   title="Research Paper Preview"
                 />
-                
+
                 {/* Download Overlay */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                   <div className="text-center">
@@ -532,7 +761,7 @@ export default function ProjectDetailPage() {
             <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
             <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
             <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
-            
+
             <span className="text-white font-semibold relative block overflow-hidden">
               <span className="inline-block transition-transform duration-300 group-hover:-translate-y-full">
                 View More Projects

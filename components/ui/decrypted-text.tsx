@@ -29,6 +29,11 @@ export function DecryptedText({
   const hasAnimatedRef = useRef(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
+  useEffect(() => {
+    setDisplayText(text)
+    hasAnimatedRef.current = false
+  }, [text])
+
   const startDecryption = () => {
     if (isAnimating) return
     
