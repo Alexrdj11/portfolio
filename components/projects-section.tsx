@@ -115,7 +115,7 @@ export function ProjectsSection() {
 						triggerOnHover={true}
 					/>
 					<p className="text-gray-400 text-sm md:text-base max-w-2xl">
-						Explore featured projects with fluid WebGL morphing transitions.
+						Checkout my work
 					</p>
 				</div>
 
